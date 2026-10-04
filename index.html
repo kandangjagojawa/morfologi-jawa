@@ -231,37 +231,55 @@
         <div class="input-group">
             <select id="mainAter" onchange="runProses()">
                 <option value="">- Tanpa Ater-ater -</option>
-                <option value="m">m-</option>
-                <option value="n">n-</option>
-                <option value="ny">ny-</option>
-                <option value="ng">ng-</option>
-                <option value="pa">pa-</option>
-                <option value="pating_paN">pating / paN-</option>
-                <option value="kuma">kuma-</option>
-                <option value="pi">pi-</option>
-                <option value="kapi">kapi-</option>
-                <option value="ma">ma-</option>
-                <option value="sa">sa-</option>
-                <option value="in">in- (seselan)</option>
-                <option value="ka">ka-</option>
+                <optgroup label="Anuswara (Sengau)">
+                    <option value="N">N- (Otomatis Sengau)</option>
+                    <option value="m">m-</option>
+                    <option value="n">n-</option>
+                    <option value="ny">ny-</option>
+                    <option value="ng">ng-</option>
+                </optgroup>
+                <optgroup label="Tripurusa & Tanggap">
+                    <option value="dak">dak-</option>
+                    <option value="tak">tak-</option>
+                    <option value="kok">kok-</option>
+                    <option value="ko">ko-</option>
+                    <option value="di">di-</option>
+                    <option value="ka">ka-</option>
+                    <option value="ke">ke-</option>
+                    <option value="in">in- (seselan)</option>
+                </optgroup>
+                <optgroup label="Bawa & Sifat">
+                    <option value="a">a-</option>
+                    <option value="ha">ha-</option>
+                    <option value="ma">ma-</option>
+                    <option value="pa">pa-</option>
+                    <option value="pi">pi-</option>
+                    <option value="pra">pra-</option>
+                    <option value="sa">sa-</option>
+                    <option value="tar">tar-</option>
+                    <option value="kami">kami-</option>
+                    <option value="kapi">kapi-</option>
+                    <option value="kuma">kuma-</option>
+                    <option value="pating_paN">pating / paN-</option>
+                </optgroup>
             </select>
             
             <input type="text" id="mainDasar" placeholder="Ketik kata dasar..." autocomplete="off" oninput="runProses()">
             
             <select id="mainPanam" onchange="runProses()">
                 <option value="">- Tanpa Panambang -</option>
-                <option value="i">-i</option>
                 <option value="a">-a</option>
-                <option value="ana">-ana</option>
-                <option value="na">-na</option>
+                <option value="i">-i</option>
+                <option value="e">-e</option>
+                <option value="é">-é</option>
                 <option value="an">-an</option>
                 <option value="an_e">-an + é</option>
+                <option value="na">-na</option>
+                <option value="ana">-ana</option>
+                <option value="en">-en</option>
                 <option value="ake">-ake</option>
                 <option value="aké">-aké</option>
                 <option value="aken">-aken</option>
-                <option value="en">-en</option>
-                <option value="e">-e</option>
-                <option value="é">-é</option>
                 <option value="ipun">-ipun</option>
             </select>
             
