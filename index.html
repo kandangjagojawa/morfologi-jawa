@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Morfologi Bahasa Jawa</title>
+    <style>
+        @font-face {
+            font-family: 'Ngayogyan';
+            src: url('ngayogyann.ttf') format('truetype');
+        }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: #f4f4f9; 
+            padding: 20px; 
+            color: #333;
+        }
+        .container { 
+            max-width: 900px; 
+            margin: auto; 
+            background: white; 
+            padding: 30px; 
+            border-radius: 10px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+        }
+        h1 { text-align: center; margin-bottom: 5px; color: #2c3e50; }
+        h3 { text-align: center; color: #7f8c8d; margin-top: 0; margin-bottom: 25px; font-weight: normal; font-size: 1.1rem; }
+        
+        .panel-penting { 
+            background: #fff3cd; 
+            border: 1px solid #ffeeba; 
+            padding: 15px; 
+            border-radius: 8px; 
+            margin-bottom: 25px; 
+        }
+        .panel-penting summary { 
+            font-weight: bold; 
+            cursor: pointer; 
+            color: #856404; 
+            font-size: 1.05rem;
+        }
+        .panel-penting ul { margin-top: 10px; margin-bottom: 0; line-height: 1.6; }
+        
+        .input-group { 
+            display: flex; 
+            gap: 15px; 
+            margin-bottom: 25px; 
+            align-items: center; 
+            justify-content: center;
+            flex-wrap: wrap; 
+        }
+        .input-group select, .input-group input { 
+            padding: 12px; 
+            font-size: 16px; 
+            border: 1px solid #ccd1d9; 
+            border-radius: 6px; 
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .input-group select:focus, .input-group input:focus { border-color: #3498db; }
+        
+        .controls { 
+            display: flex; 
+            gap: 30px; 
+            justify-content: center; 
+            margin-bottom: 25px; 
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .controls label { 
+            display: flex; 
+            flex-direction: column; 
+            font-size: 14px; 
+            font-weight: 600;
+            color: #555;
+            align-items: center;
+            gap: 8px;
+        }
+        .controls input[type="range"] { cursor: pointer; }
+        
+        .result-container { 
+            display: flex; 
+            gap: 20px; 
+            flex-wrap: wrap;
+        }
+        .result-box { 
+            flex: 1; 
+            min-width: 300px;
+            border: 1px solid #e1e8ed; 
+            padding: 20px; 
+            border-radius: 8px; 
+            background: #fafafa; 
+            position: relative; 
+        }
+        .result-box h4 {
+            margin-top: 0;
+            color: #2980b9;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 8px;
+            display: inline-block;
+        }
+        .aksara-output { 
+            font-family: 'Ngayogyan', sans-serif; 
+            font-size: 2rem; 
+            line-height: 1.5; 
+            min-height: 120px; 
+            margin-top: 15px; 
+            border: 1px dashed #bdc3c7; 
+            padding: 15px; 
+            background: white; 
+            border-radius: 6px;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+        .latin-output { 
+            width: 100%; 
+            padding: 10px; 
+            box-sizing: border-box; 
+            margin-top: 10px; 
+            background: #f1f2f6; 
+            border: 1px solid #dcdde1; 
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 14px;
+        }
+        
+        .btn { 
+            padding: 10px 16px; 
+            cursor: pointer; 
+            background: #3498db; 
+            color: white; 
+            border: none; 
+            border-radius: 6px; 
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        .btn:hover { background: #2980b9; }
+        .btn-danger { background: #e74c3c; }
+        .btn-danger:hover { background: #c0392b; }
+        .btn-copy { 
+            position: absolute; 
+            top: 20px; 
+            right: 20px; 
+            font-size: 12px; 
+            padding: 6px 12px;
+        }
+        
+        .warning { color: #e74c3c; font-size: 13px; font-weight: bold; margin-top: 5px; }
+        .param-warning { padding: 8px; background: #fadbd8; border-radius: 4px; }
+        
+        footer { 
+            text-align: center; 
+            margin-top: 40px; 
+            font-weight: bold; 
+            color: #7f8c8d; 
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- IFRAME SANDBOX UNTUK ISOLASI SCRIPT KBJ -->
+    <iframe id="frameKbj" style="display:none;" srcdoc="
+        <!DOCTYPE html>
+        <html><body>
+            <input id='selAter'><input id='inDasar'><input id='selPanam'>
+            <div id='paramWarningArea'></div>
+            <input id='outParamLatin'><div id='outParamJawa'></div>
+            <script src='kbj.js'></script>
+            <script>
+                window.proses = function(ater, dasar, panam) {
+                    document.getElementById('selAter').value = ater;
+                    document.getElementById('inDasar').value = dasar;
+                    document.getElementById('selPanam').value = panam;
+                    if(typeof prosesParamasastra === 'function') {
+                        prosesParamasastra();
+                        return {
+                            latin: document.getElementById('outParamLatin').value,
+                            jawa: document.getElementById('outParamJawa').innerText,
+                            warn: document.getElementById('paramWarningArea').innerHTML
+                        };
+                    }
+                    return null;
+                };
+            </script>
+        </body></html>
+    "></iframe>
+
+    <!-- IFRAME SANDBOX UNTUK ISOLASI SCRIPT SRIWEDARI -->
+    <iframe id="frameSriwedari" style="display:none;" srcdoc="
+        <!DOCTYPE html>
+        <html><body>
+            <input id='selAter'><input id='inDasar'><input id='selPanam'>
+            <div id='paramWarningArea'></div>
+            <input id='outParamLatin'><div id='outParamJawa'></div>
+            <script src='sriwedari.js'></script>
+            <script>
+                window.proses = function(ater, dasar, panam) {
+                    document.getElementById('selAter').value = ater;
+                    document.getElementById('inDasar').value = dasar;
+                    document.getElementById('selPanam').value = panam;
+                    if(typeof prosesParamasastra === 'function') {
+                        prosesParamasastra();
+                        return {
+                            latin: document.getElementById('outParamLatin').value,
+                            jawa: document.getElementById('outParamJawa').innerText,
+                            warn: document.getElementById('paramWarningArea').innerHTML
+                        };
+                    }
+                    return null;
+                };
+            </script>
+        </body></html>
+    "></iframe>
+
+    <div class="container">
+        <h1>Morfologi Bahasa Jawa</h1>
+        <h3>Pembentukan kata turunan (berimbuhan) dengan Ater-ater dan Panambang.</h3>
+        
+        <details class="panel-penting" open>
+            <summary>PENTING: Cara Penulisan Huruf Latin</summary>
+            <ul>
+                <li><strong>e pepet dan e taling:</strong> Gunakan 'e' atau 'ê' untuk e pepet (seperti pada kata "segar"). Gunakan 'é' atau 'è' untuk e taling (seperti pada kata "bèbèk" atau "saté").</li>
+                <li><strong>Aksara Swara:</strong> Gunakan huruf kapital A, I, U, E, O untuk Aksara Swara.</li>
+                <li><strong>Aksara Murda:</strong> Ketik konsonan Kapital (N, K, T, S, P, G, B, J, NY).</li>
+                <li><strong>Aksara Rekan:</strong> Gunakan huruf f, v, z, kh, dz, gh.</li>
+            </ul>
+        </details>
+
+        <div class="input-group">
+            <select id="mainAter" onchange="runProses()">
+                <option value="">- Tanpa Ater-ater -</option>
+                <option value="m">m-</option>
+                <option value="n">n-</option>
+                <option value="ny">ny-</option>
+                <option value="ng">ng-</option>
+                <option value="pa">pa-</option>
+                <option value="pating_paN">pating / paN-</option>
+                <option value="kuma">kuma-</option>
+                <option value="pi">pi-</option>
+                <option value="kapi">kapi-</option>
+                <option value="ma">ma-</option>
+                <option value="sa">sa-</option>
+                <option value="in">in- (seselan)</option>
+                <option value="ka">ka-</option>
+            </select>
+            
+            <input type="text" id="mainDasar" placeholder="Ketik kata dasar..." autocomplete="off" oninput="runProses()">
+            
+            <select id="mainPanam" onchange="runProses()">
+                <option value="">- Tanpa Panambang -</option>
+                <option value="i">-i</option>
+                <option value="a">-a</option>
+                <option value="ana">-ana</option>
+                <option value="na">-na</option>
+                <option value="an">-an</option>
+                <option value="an_e">-an + é</option>
+                <option value="ake">-ake</option>
+                <option value="aké">-aké</option>
+                <option value="aken">-aken</option>
+                <option value="en">-en</option>
+                <option value="e">-e</option>
+                <option value="é">-é</option>
+                <option value="ipun">-ipun</option>
+            </select>
+            
+            <button class="btn btn-danger" onclick="hapusSemuaMain()">Hapus Semua</button>
+        </div>
+
+        <div class="controls">
+            <label>
+                Ukuran Font Aksara (rem):
+                <input type="range" id="mainFontSize" min="1.5" max="4" step="0.1" value="2" oninput="updateStyle()">
+            </label>
+            <label>
+                Spasi Antar Baris:
+                <input type="range" id="mainLineHeight" min="1" max="2.5" step="0.1" value="1.5" oninput="updateStyle()">
+            </label>
+        </div>
+
+        <div class="result-container">
+            <div class="result-box">
+                <button class="btn btn-copy" onclick="copyAksara('outJawaKBJ', this)">Salin</button>
+                <h4>Paugeran KBJ</h4>
+                <div id="warnKBJ" class="warning"></div>
+                <input type="text" id="outLatinKBJ" class="latin-output" readonly placeholder="Output Latin">
+                <div id="outJawaKBJ" class="aksara-output"></div>
+            </div>
+            
+            <div class="result-box">
+                <button class="btn btn-copy" onclick="copyAksara('outJawaSriwedari', this)">Salin</button>
+                <h4>Paugeran Sriwedari</h4>
+                <div id="warnSriwedari" class="warning"></div>
+                <input type="text" id="outLatinSriwedari" class="latin-output" readonly placeholder="Output Latin">
+                <div id="outJawaSriwedari" class="aksara-output"></div>
+            </div>
+        </div>
+
+        <footer>Dari KANDANGJAGO untuk Nusantara</footer>
+    </div>
+
+    <script>
+        function runProses() {
+            let ater = document.getElementById('mainAter').value;
+            let dasar = document.getElementById('mainDasar').value;
+            let panam = document.getElementById('mainPanam').value;
+
+            // Eksekusi proses pada iframe KBJ
+            let frameKbj = document.getElementById('frameKbj').contentWindow;
+            if (frameKbj && typeof frameKbj.proses === 'function') {
+                let resKbj = frameKbj.proses(ater, dasar, panam);
+                if (resKbj) {
+                    document.getElementById('warnKBJ').innerHTML = resKbj.warn;
+                    document.getElementById('outLatinKBJ').value = resKbj.latin;
+                    document.getElementById('outJawaKBJ').innerText = resKbj.jawa;
+                }
+            }
+
+            // Eksekusi proses pada iframe Sriwedari
+            let frameSriwedari = document.getElementById('frameSriwedari').contentWindow;
+            if (frameSriwedari && typeof frameSriwedari.proses === 'function') {
+                let resSriwedari = frameSriwedari.proses(ater, dasar, panam);
+                if (resSriwedari) {
+                    document.getElementById('warnSriwedari').innerHTML = resSriwedari.warn;
+                    document.getElementById('outLatinSriwedari').value = resSriwedari.latin;
+                    document.getElementById('outJawaSriwedari').innerText = resSriwedari.jawa;
+                }
+            }
+        }
+
+        function hapusSemuaMain() {
+            document.getElementById('mainAter').value = "";
+            document.getElementById('mainDasar').value = "";
+            document.getElementById('mainPanam').value = "";
+            runProses();
+        }
+
+        function updateStyle() {
+            let size = document.getElementById('mainFontSize').value + 'rem';
+            let lh = document.getElementById('mainLineHeight').value;
+            
+            let jawaBoxes = document.querySelectorAll('.aksara-output');
+            jawaBoxes.forEach(box => {
+                box.style.fontSize = size;
+                box.style.lineHeight = lh;
+            });
+        }
+
+        function copyAksara(elementId, btn) {
+            let text = document.getElementById(elementId).innerText;
+            if (!text) return;
+            navigator.clipboard.writeText(text).then(() => {
+                let original = btn.innerText;
+                btn.innerText = 'Tersalin!';
+                setTimeout(() => { btn.innerText = original; }, 2000);
+            });
+        }
+
+        // Panggil runProses awal sesudah iframe internal dirender
+        window.onload = () => {
+            setTimeout(runProses, 300);
+        };
+    </script>
+</body>
+</html>
