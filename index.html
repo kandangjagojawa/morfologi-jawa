@@ -87,19 +87,38 @@
         .result-box { 
             flex: 1; 
             min-width: 300px;
-            border: 1px solid #e1e8ed; 
             padding: 20px; 
             border-radius: 8px; 
-            background: #fafafa; 
             position: relative; 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
         }
-        .result-box h4 {
+
+        /* Latar Belakang Gradasi Merah untuk Paugeran KBJ */
+        .box-kbj {
+            background: linear-gradient(135deg, #fff5f5 0%, #ffe3e3 100%);
+            border: 1px solid #f5c6cb;
+        }
+        .box-kbj h4 {
             margin-top: 0;
-            color: #2980b9;
-            border-bottom: 2px solid #3498db;
+            color: #900c3f;
+            border-bottom: 2px solid #c70039;
             padding-bottom: 8px;
             display: inline-block;
         }
+
+        /* Latar Belakang Gradasi Hijau untuk Paugeran Sriwedari */
+        .box-sriwedari {
+            background: linear-gradient(135deg, #f4fbf7 0%, #d4edda 100%);
+            border: 1px solid #c3e6cb;
+        }
+        .box-sriwedari h4 {
+            margin-top: 0;
+            color: #155724;
+            border-bottom: 2px solid #28a745;
+            padding-bottom: 8px;
+            display: inline-block;
+        }
+
         .aksara-output { 
             font-family: 'Ngayogyan', sans-serif; 
             font-size: 2rem; 
@@ -118,7 +137,7 @@
             padding: 10px; 
             box-sizing: border-box; 
             margin-top: 10px; 
-            background: #f1f2f6; 
+            background: #ffffff; 
             border: 1px solid #dcdde1; 
             border-radius: 4px;
             font-family: monospace;
@@ -298,7 +317,7 @@
         </div>
 
         <div class="result-container">
-            <div class="result-box">
+            <div class="result-box box-kbj">
                 <button class="btn btn-copy" onclick="copyAksara('outJawaKBJ', this)">Salin</button>
                 <h4>Paugeran KBJ</h4>
                 <div id="warnKBJ" class="warning"></div>
@@ -306,7 +325,7 @@
                 <div id="outJawaKBJ" class="aksara-output"></div>
             </div>
             
-            <div class="result-box">
+            <div class="result-box box-sriwedari">
                 <button class="btn btn-copy" onclick="copyAksara('outJawaSriwedari', this)">Salin</button>
                 <h4>Paugeran Sriwedari</h4>
                 <div id="warnSriwedari" class="warning"></div>
