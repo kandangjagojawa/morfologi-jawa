@@ -268,8 +268,6 @@
                     <option value="in">in- (seselan)</option>
                 </optgroup>
                 <optgroup label="Bawa & Sifat">
-                    <option value="a">a-</option>
-                    <option value="ha">ha-</option>
                     <option value="ma">ma-</option>
                     <option value="pa">pa-</option>
                     <option value="pi">pi-</option>
@@ -289,14 +287,12 @@
                 <option value="">- Tanpa Panambang -</option>
                 <option value="a">-a</option>
                 <option value="i">-i</option>
-                <option value="e">-e</option>
                 <option value="é">-é</option>
                 <option value="an">-an</option>
                 <option value="an_e">-an + é</option>
                 <option value="na">-na</option>
                 <option value="ana">-ana</option>
                 <option value="en">-en</option>
-                <option value="ake">-ake</option>
                 <option value="aké">-aké</option>
                 <option value="aken">-aken</option>
                 <option value="ipun">-ipun</option>
@@ -354,14 +350,28 @@
                 }
             }
 
-            // Eksekusi proses pada iframe Sriwedari
-            let frameSriwedari = document.getElementById('frameSriwedari').contentWindow;
-            if (frameSriwedari && typeof frameSriwedari.proses === 'function') {
-                let resSriwedari = frameSriwedari.proses(ater, dasar, panam);
-                if (resSriwedari) {
-                    document.getElementById('warnSriwedari').innerHTML = resSriwedari.warn;
-                    document.getElementById('outLatinSriwedari').value = resSriwedari.latin;
-                    document.getElementById('outJawaSriwedari').innerText = resSriwedari.jawa;
+            // Eksekusi khusus untuk Sriwedari saat tak- atau kok- dipilih
+            if (!dasar.trim()) {
+                document.getElementById('warnSriwedari').innerHTML = "";
+                document.getElementById('outLatinSriwedari').value = "";
+                document.getElementById('outJawaSriwedari').innerText = "";
+            } else if (ater === 'tak') {
+                document.getElementById('warnSriwedari').innerHTML = "";
+                document.getElementById('outLatinSriwedari').value = "standar memakai dak-";
+                document.getElementById('outJawaSriwedari').innerText = "standar memakai dak-";
+            } else if (ater === 'kok') {
+                document.getElementById('warnSriwedari').innerHTML = "";
+                document.getElementById('outLatinSriwedari').value = "standar memakai ko-";
+                document.getElementById('outJawaSriwedari').innerText = "standar memakai ko-";
+            } else {
+                let frameSriwedari = document.getElementById('frameSriwedari').contentWindow;
+                if (frameSriwedari && typeof frameSriwedari.proses === 'function') {
+                    let resSriwedari = frameSriwedari.proses(ater, dasar, panam);
+                    if (resSriwedari) {
+                        document.getElementById('warnSriwedari').innerHTML = resSriwedari.warn;
+                        document.getElementById('outLatinSriwedari').value = resSriwedari.latin;
+                        document.getElementById('outJawaSriwedari').innerText = resSriwedari.jawa;
+                    }
                 }
             }
         }
