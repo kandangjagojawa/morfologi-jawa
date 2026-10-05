@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Morfologi Bahasa Jawa</title>
     <style>
+        /* Reset box-sizing agar padding & border tidak menambah lebar elemen */
+        * {
+            box-sizing: border-box;
+        }
+
         @font-face {
             font-family: 'Ngayogyan';
             src: url('ngayogyann.ttf') format('truetype');
@@ -13,6 +18,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
             background: #f4f4f9; 
             padding: 20px; 
+            margin: 0;
             color: #333;
         }
         .container { 
@@ -22,9 +28,10 @@
             padding: 30px; 
             border-radius: 10px; 
             box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+            width: 100%;
         }
-        h1 { text-align: center; margin-bottom: 5px; color: #2c3e50; }
-        h3 { text-align: center; color: #7f8c8d; margin-top: 0; margin-bottom: 25px; font-weight: normal; font-size: 1.1rem; }
+        h1 { text-align: center; margin-bottom: 5px; color: #2c3e50; font-size: 1.8rem; }
+        h3 { text-align: center; color: #7f8c8d; margin-top: 0; margin-bottom: 25px; font-weight: normal; font-size: 1rem; line-height: 1.4; }
         
         .panel-penting { 
             background: #fff3cd; 
@@ -37,9 +44,9 @@
             font-weight: bold; 
             cursor: pointer; 
             color: #856404; 
-            font-size: 1.05rem;
+            font-size: 1rem;
         }
-        .panel-penting ul { margin-top: 10px; margin-bottom: 0; line-height: 1.6; }
+        .panel-penting ul { margin-top: 10px; margin-bottom: 0; padding-left: 20px; line-height: 1.6; }
         
         .input-group { 
             display: flex; 
@@ -48,6 +55,7 @@
             align-items: center; 
             justify-content: center;
             flex-wrap: wrap; 
+            width: 100%;
         }
         .input-group select, .input-group input { 
             padding: 12px; 
@@ -56,6 +64,7 @@
             border-radius: 6px; 
             outline: none;
             transition: border-color 0.2s;
+            max-width: 100%;
         }
         .input-group select:focus, .input-group input:focus { border-color: #3498db; }
         
@@ -67,6 +76,7 @@
             background: #f8f9fa;
             padding: 15px;
             border-radius: 8px;
+            flex-wrap: wrap;
         }
         .controls label { 
             display: flex; 
@@ -83,14 +93,16 @@
             display: flex; 
             gap: 20px; 
             flex-wrap: wrap;
+            width: 100%;
         }
         .result-box { 
-            flex: 1; 
-            min-width: 300px;
+            flex: 1 1 300px; 
+            min-width: 0; 
             padding: 20px; 
             border-radius: 8px; 
             position: relative; 
             box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            width: 100%;
         }
 
         /* Latar Belakang Gradasi Merah untuk Paugeran KBJ */
@@ -131,17 +143,8 @@
             border-radius: 6px;
             white-space: pre-wrap;
             word-break: break-word;
-        }
-        .latin-output { 
-            width: 100%; 
-            padding: 10px; 
-            box-sizing: border-box; 
-            margin-top: 10px; 
-            background: #ffffff; 
-            border: 1px solid #dcdde1; 
-            border-radius: 4px;
-            font-family: monospace;
-            font-size: 14px;
+            overflow-wrap: break-word;
+            width: 100%;
         }
         
         .btn { 
@@ -174,6 +177,36 @@
             font-weight: bold; 
             color: #7f8c8d; 
             font-size: 14px;
+        }
+
+        /* Tampilan khusus perangkat Mobile */
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                padding: 15px;
+            }
+            .input-group select, 
+            .input-group input, 
+            .input-group button {
+                width: 100%;
+            }
+            .controls {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .result-box {
+                flex: 1 1 100%;
+                padding: 15px;
+            }
+            .btn-copy {
+                position: static;
+                display: block;
+                width: 100%;
+                margin-top: 10px;
+                margin-bottom: 10px;
+            }
         }
     </style>
 </head>
@@ -314,18 +347,16 @@
 
         <div class="result-container">
             <div class="result-box box-kbj">
-                <button class="btn btn-copy" onclick="copyAksara('outJawaKBJ', this)">Salin</button>
                 <h4>Paugeran KBJ</h4>
+                <button class="btn btn-copy" onclick="copyAksara('outJawaKBJ', this)">Salin</button>
                 <div id="warnKBJ" class="warning"></div>
-                <input type="text" id="outLatinKBJ" class="latin-output" readonly placeholder="Output Latin">
                 <div id="outJawaKBJ" class="aksara-output"></div>
             </div>
             
             <div class="result-box box-sriwedari">
-                <button class="btn btn-copy" onclick="copyAksara('outJawaSriwedari', this)">Salin</button>
                 <h4>Paugeran Sriwedari</h4>
+                <button class="btn btn-copy" onclick="copyAksara('outJawaSriwedari', this)">Salin</button>
                 <div id="warnSriwedari" class="warning"></div>
-                <input type="text" id="outLatinSriwedari" class="latin-output" readonly placeholder="Output Latin">
                 <div id="outJawaSriwedari" class="aksara-output"></div>
             </div>
         </div>
@@ -345,7 +376,6 @@
                 let resKbj = frameKbj.proses(ater, dasar, panam);
                 if (resKbj) {
                     document.getElementById('warnKBJ').innerHTML = resKbj.warn;
-                    document.getElementById('outLatinKBJ').value = resKbj.latin;
                     document.getElementById('outJawaKBJ').innerText = resKbj.jawa;
                 }
             }
@@ -353,15 +383,12 @@
             // Eksekusi khusus untuk Sriwedari saat tak- atau kok- dipilih
             if (!dasar.trim()) {
                 document.getElementById('warnSriwedari').innerHTML = "";
-                document.getElementById('outLatinSriwedari').value = "";
                 document.getElementById('outJawaSriwedari').innerText = "";
             } else if (ater === 'tak') {
                 document.getElementById('warnSriwedari').innerHTML = "";
-                document.getElementById('outLatinSriwedari').value = "standar memakai dak-";
                 document.getElementById('outJawaSriwedari').innerText = "standar memakai dak-";
             } else if (ater === 'kok') {
                 document.getElementById('warnSriwedari').innerHTML = "";
-                document.getElementById('outLatinSriwedari').value = "standar memakai ko-";
                 document.getElementById('outJawaSriwedari').innerText = "standar memakai ko-";
             } else {
                 let frameSriwedari = document.getElementById('frameSriwedari').contentWindow;
@@ -369,7 +396,6 @@
                     let resSriwedari = frameSriwedari.proses(ater, dasar, panam);
                     if (resSriwedari) {
                         document.getElementById('warnSriwedari').innerHTML = resSriwedari.warn;
-                        document.getElementById('outLatinSriwedari').value = resSriwedari.latin;
                         document.getElementById('outJawaSriwedari').innerText = resSriwedari.jawa;
                     }
                 }
