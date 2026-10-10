@@ -3,9 +3,8 @@
 > Pembentukan kata turunan (berimbuhan) dengan Ater-ater dan Panambang. Konversi otomatis Latin ke Aksara Jawa dengan perbandingan dua paugeran: **KBJ (Kongres Bahasa Jawa)** dan **Sriwedari**.
 
 ![Aksara Jawa](https://img.shields.io/badge/Aksara-Jawa-brown?style=for-the-badge)
-[Paugeran](https://img.shields.io/badge/Paugeran-KBJ%20%7C%20Sriwedari-green?style=flat-square)
-[GitHub Pages](https://img.shields.io/badge/Deployed-GitHub%20Pages-blue?style=flat-square)
-[License](https://img.shields.io/badge/License-MIT-lightgrey)
+![Paugeran](https://img.shields.io/badge/Paugeran-KBJ%20%7C%20Sriwedari-green?style=flat-square)
+![License](https://img.shields.io/badge/License-MIT-lightgrey)
 
 ### Dari KANDANGJAGO untuk Nusantara
 
