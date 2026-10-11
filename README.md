@@ -1,70 +1,67 @@
-# Morfologi Bahasa Jawa — Aksara Jawa Converter
+# Morfologi Bahasa Jawa — Konverter Aksara Jawa Berimbuhan
 
-> Pembentukan kata turunan (berimbuhan) dengan Ater-ater dan Panambang. Konversi otomatis Latin ke Aksara Jawa dengan perbandingan dua paugeran: **KBJ (Kongres Bahasa Jawa)** dan **Sriwedari**.
+Aplikasi sederhana untuk belajar pembentukan kata turunan (tembung andhahan) dalam Bahasa Jawa yang ditulis langsung ke dalam Aksara Jawa.
 
-![Aksara Jawa](https://img.shields.io/badge/Aksara-Jawa-brown?style=for-the-badge)
-![Paugeran](https://img.shields.io/badge/Paugeran-KBJ%20%7C%20Sriwedari-green?style=flat-square)
-![License](https://img.shields.io/badge/License-MIT-lightgrey)
+Fokusnya bukan sekadar transliterasi, tapi **morfologi**: bagaimana sebuah kata dasar berubah makna dan penulisannya ketika mendapat ater-ater (awalan) dan panambang (akhiran).
 
-### Dari KANDANGJAGO untuk Nusantara
+> Dari KANDANGJAGO untuk Nusantara.
+
+### Apa yang dilakukan aplikasi ini?
+
+Ketik satu kata dasar, lalu tambahkan imbuhan Jawa. Aplikasi akan langsung menampilkan hasilnya dalam Aksara Jawa dengan dua standar penulisan sekaligus, sehingga kamu bisa membandingkan perbedaannya secara langsung.
+
+**Contoh alur:** `N-` + `tulis` + `-an` → `nulis...` dalam Aksara Jawa.
+
+### Dua Paugeran, Satu Layar
+
+Hasil ditampilkan berdampingan agar mudah dipelajari:
+
+**1. Paugeran KBJ (Kongres Bahasa Jawa)**
+Standar yang umum diajarkan saat ini di sekolah-sekolah. Latar merah muda pada aplikasi.
+
+**2. Paugeran Sriwedari**
+Standar klasik hasil Kongres Sriwedari tahun 1920-an, masih banyak dipakai dalam naskah tradisional dan kajian filologi. Latar hijau pada aplikasi.
+
+Untuk beberapa bentuk seperti `tak-` dan `kok-`, Sriwedari secara baku menggunakan `dak-` dan `ko-`. Aplikasi akan memberi tahu otomatis.
+
+### Fitur Utama
+
+- **Ater-ater Lengkap:** Mulai dari anuswara (N-, m-, n-, ny-, ng-), tripurusa & tanggap (dak-, tak-, kok-, ko-, di-, ka-), hingga bawa & sifat (ma-, pa-, pi-, pra-, sa-, tar-, kami-, kapi-, kuma-, pating/paN-)
+- **Panambang Lengkap:** -a, -i, -é, -an, -an + é, -na, -ana, -en, -aké, -aken, -ipun, dan kombinasi dengan seselan `in-`
+- **Perbandingan Langsung:** Lihat perbedaan KBJ vs Sriwedari tanpa ganti halaman
+- **Atur Tampilan:** Slider untuk ukuran font Aksara dan spasi baris agar nyaman dibaca dan dipresentasikan
+- **Salin Sekali Klik:** Tombol Salin untuk langsung memakai hasil Aksara di dokumen lain
+
+### Panduan Penting Penulisan Latin
+
+Agar konversi ke Aksara akurat, ikuti cara ketik ini:
+
+- **e pepet vs e taling:** Gunakan `e` atau `ê` untuk e pepet (seperti pada *segar*). Gunakan `é` atau `è` untuk e taling (seperti pada *bèbèk* / *saté*).
+- **Aksara Swara:** Gunakan huruf kapital `A, I, U, E, O` untuk menulis aksara swara di awal kata.
+- **Aksara Murda:** Ketik konsonan kapital `N, K, T, S, P, G, B, J, NY` untuk memunculkan murda.
+- **Aksara Rekan:** Gunakan `f, v, z, kh, dz, gh` untuk kata serapan.
+
+### Cara Menggunakan
+
+1. Pilih **Ater-ater** jika kata memakai awalan
+2. Ketik **Kata Dasar** dalam huruf latin (contoh: `pangan`, `tulis`, `gawe`)
+3. Pilih **Panambang** jika kata memakai akhiran
+4. Hasil Aksara KBJ dan Sriwedari akan muncul otomatis di bawah
+5. Atur ukuran font jika perlu, lalu klik **Salin**
+
+Tidak perlu menekan enter. Semua proses berjalan otomatis saat kamu mengetik.
+
+### Untuk Siapa Aplikasi Ini?
+
+- Pelajar dan guru Bahasa Jawa yang ingin menjelaskan imbuhan secara visual
+- Penulis naskah, undangan adat, dan prasasti yang butuh Aksara Jawa yang baku
+- Penggiat aksara dan komunitas pelestari budaya Jawa
+- Siapa saja yang rindu menulis Jawa dengan benar
+
+### Catatan
+
+Aplikasi ini adalah alat bantu belajar. Untuk penulisan karya resmi, tetap rujuk pada paugeran yang kamu gunakan (KBJ atau Sriwedari) dan kamus Bausastra Jawa.
 
 ---
 
-## ✨ Fitur Utama
-
-**1. Morfologi Lengkap Bahasa Jawa**
-- **Ater-ater (Awalan):** Mendukung 3 kelompok:
-  - Anuswara (Sengau): `N- (Otomatis Sengau)`, `m-`, `n-`, `ny-`, `ng-`
-  - Tripurusa & Tanggap: `dak-`, `tak-`, `kok-`, `ko-`, `di-`, `ka-`, `ke-`, `in- (seselan)`
-  - Bawa & Sifat: `ma-`, `pa-`, `pi-`, `pra-`, `sa-`, `tar-`, `kami-`, `kapi-`, `kuma-`, `pating / paN-`
-- **Kata Dasar:** Input bebas untuk kata dasar Jawa
-- **Panambang (Akhiran):** `-a`, `-i`, `-é`, `-an`, `-an + é`, `-na`, `-ana`, `-en`, `-aké`, `-aken`, `-ipun`
-
-**2. Dual Paugeran — Perbandingan Langsung**
-- **Box Merah (KBJ):** `Paugeran KBJ` 
-- **Box Hijau (Sriwedari):** `Paugeran Sriwedari`
-- Penanganan khusus: untuk Sriwedari, `tak-` otomatis menjadi `dak-` dan `kok-` menjadi `ko-` (sesuai standar)
-
-**3. Custom Aksara**
-- Font `Ngayogyan` untuk rendering Aksara Jawa otentik
-- Slider kontrol: Ukuran Font Aksara (1.5 - 4 rem) & Spasi Antar Baris (1 - 2.5)
-- Tombol **Salin** untuk copy hasil Aksara Jawa
-- Responsive 100% — optimal di desktop & mobile
-
-## 📖 Panduan Penulisan Latin
-
-Aturan penting yang diimplementasikan di aplikasi:
-
-| Aturan | Cara Penulisan |
-| :--- | :--- |
-| **e pepet & e taling** | Gunakan `e` atau `ê` untuk e pepet (segar). Gunakan `é` atau `è` untuk e taling (bèbèk, saté) |
-| **Aksara Swara** | Gunakan huruf kapital `A, I, U, E, O` |
-| **Aksara Murda** | Ketik konsonan Kapital `N, K, T, S, P, G, B, J, NY` |
-| **Aksara Rekan** | Gunakan huruf `f, v, z, kh, dz, gh` untuk kata serapan Arab/Belanda |
-
-## 🚀 Cara Penggunaan
-
-1. Pilih **Ater-ater** (awalan) dari dropdown — bisa dikosongkan
-2. Ketik **Kata Dasar** di kolom tengah (contoh: `tulis`, `pangan`, `gawe`)
-3. Pilih **Panambang** (akhiran) dari dropdown — bisa dikosongkan
-4. Hasil Aksara Jawa otomatis muncul di dua box KBJ & Sriwedari
-5. Atur ukuran font & spasi jika perlu, lalu klik **Salin**
-
-Contoh:
-- `N-` + `tulis` + `-an` → ꦤꦸꦭꦶꦱꦤ꧀ (tulisan)
-- `di-` + `pangan` → ꦢꦶꦥꦔꦤ꧀
-- `ka-` + `gawe` + `-an` → ꦏꦒꦮꦺꦪꦤ꧀
-
-## 🔮 Roadmap
-
-- [ ] Tambah mode transliterasi Aksara → Latin
-- [ ] Export hasil sebagai PNG/SVG
-- [ ] Kamus kata dasar Jawa built-in dengan autocomplete
-- [ ] PWA support agar bisa offline
-- [ ] Dark mode
-
-## 🙏 Kredit & Lisensi
-
-Dibuat oleh **KANDANGJAGO** untuk pelestarian Aksara Jawa.
-
-Lisensi: **MIT** — bebas digunakan, dimodifikasi, dan disebarkan untuk pendidikan dan pelestarian budaya.
+**Matur nuwun.** Semoga membantu nguri-uri Basa Jawi.
